@@ -4,9 +4,3 @@
 [submodule "web"]
 	path = web
 	url = https://github.com/hoang234176/electro-shop-web.git
-[submodule "mobile"]
-	path = mobile
-	url = https://github.com/hoang234176/electro-shop-mobile.git
-[submodule "shared"]
-	path = shared
-	url = https://github.com/hoang234176/electro-shop-shared.git
