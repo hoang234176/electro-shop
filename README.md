@@ -28,6 +28,7 @@ Electro Shop là một nền tảng thương mại điện tử mua bán đồ �
 - **Google Gemini AI**: Phân tích dữ liệu và đề xuất sản phẩm liên quan.
 - **VNPay**: Cổng thanh toán nội địa.
 - **Ngrok**: Public localhost để nhận webhook (IPN) từ VNPay.
+- **Mailtrap**: Dịch vụ SMTP giả lập để gửi email (ví dụ: khôi phục mật khẩu, xác nhận).
 
 ## 📂 Cấu trúc thư mục chính
 
@@ -55,32 +56,38 @@ electro-shop/
 ### 1. Yêu cầu hệ thống
 - Node.js (v16 trở lên)
 - MongoDB (Local hoặc MongoDB Atlas)
-- Tài khoản Cloudinary, VNPay Sandbox, và Google AI Studio (để lấy Gemini API Key)
+- Tài khoản Cloudinary, VNPay Sandbox, Mailtrap và Google AI Studio (để lấy Gemini API Key)
 
 ### 2. Thiết lập Biến môi trường (.env)
 
-Hệ thống sử dụng file `.env` riêng biệt để bảo mật các key quan trọng. Bạn cần tạo file `.env` ở thư mục `backend/` theo định dạng sau:
+Hệ thống sử dụng file `.env` riêng biệt để bảo mật các key quan trọng. Bạn cần tạo file `.env` ở cả hai thư mục `backend/` và `web/` theo định dạng mẫu dưới đây (vui lòng thay thế bằng key thực tế của bạn):
+
+**Tạo file `backend/.env`:**
 
 ```env
 # Server & Database
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/electro-shop  # Hoặc link MongoDB Atlas
+MONGODB_URI=mongodb://<username>:<password>@<cluster>.mongodb.net/Electro-Shop
 JWT_SECRET=chuoi_ki_tu_bao_mat_cua_ban
+DEFAULT_AVATAR_URL=https://res.cloudinary.com/your-cloud-name/image/upload/v12345/avatar_default.jpg
 
-# Cloudinary
+# Cloudinary (Cloud ảnh)
 CLOUDINARY_CLOUD_NAME=ten_cloud_cua_ban
 CLOUDINARY_API_KEY=api_key_cua_ban
 CLOUDINARY_API_SECRET=api_secret_cua_ban
+
+# Mailtrap (Gửi mail xác nhận)
+EMAIL_HOST=sandbox.smtp.mailtrap.io
+EMAIL_PORT=2525
+EMAIL_USERNAME=username_mailtrap
+EMAIL_PASSWORD=password_mailtrap
 
 # VNPay
 VNP_TMN_CODE=ma_website_vnpay_sandbox
 VNP_HASH_SECRET=chuoi_bi_mat_vnpay
 VNP_URL=https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
 VNP_API_URL=https://sandbox.vnpayment.vn/merchant_webapi/api/transaction
-VNP_RETURN_URL=http://localhost:3000/payment-result
-
-# Gemini AI
-GEMINI_API_KEY=google_gemini_api_key_cua_ban
+VNP_RETURN_URL=http://localhost:5173/invoice
 ```
 
 ### 3. Cài đặt và chạy Backend
@@ -99,7 +106,15 @@ cd web
 npm install
 npm start 
 # Hoặc npm run dev (tùy vào cấu hình Vite/CRA của bạn)
-# Frontend sẽ chạy tại http://localhost:3000
+# Frontend sẽ chạy tại http://localhost:5173
+
+```
+
+**Tạo file `web/.env`:**
+
+```env
+VITE_GEMINI_API_KEY=api_key_gemini_cua_ban
+API_BASE_URL =http://localhost:5000/api
 ```
 
 ## 🌐 Hướng dẫn cấu hình Ngrok cho thanh toán VNPay
