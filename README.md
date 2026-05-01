@@ -115,6 +115,7 @@ npm start
 ```env
 VITE_GEMINI_API_KEY=api_key_gemini_cua_ban
 VITE_API_BASE_URL =http://localhost:5000/api
+VITE_GEMINI_CHAT_BOT_KEY=api_key_gemini_cua_ban
 ```
 
 ## 🌐 Hướng dẫn cấu hình Ngrok cho thanh toán VNPay
